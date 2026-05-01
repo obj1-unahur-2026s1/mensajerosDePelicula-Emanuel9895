@@ -9,18 +9,37 @@ describe "los mensajeros llevan paquetes a destinos"{
     camion.acoplados(1)
     paquete.pagar()
     paquete.destino(puenteDeBrooklyn)
-    assert.that(paquete.puedeSerEntregadPor(roberto))
+    assert.that(paquete.puedeSerEntregadoPor(roberto))
   }
 
   test "neo con crédito no puede llevar un paquete que no está pago a la matrix."{
    neo.cargarCredito()
    paquete.destino(laMatrix)
-   assert.notThat(paquete.puedeSerEntregadPor(neo))
+   assert.notThat(paquete.puedeSerEntregadoPor(neo))
   }
 }
 
 test "chuckNorris puede llevar un paquete en bicicleta hasta el pueste de brooklyn"{
   paquete.destino(puenteDeBrooklyn)
   paquete.pagar()
-  assert.that(paquete.puedeSerEntregadPor(chuckNorris))
+  assert.that(paquete.puedeSerEntregadoPor(chuckNorris))
+}
+
+describe "la empresa envia paquetes con los mensajeros"{
+
+  test "la empresa envia un paquete"{
+    assert.that(empresa.puedePaqueteSerEntregado(paquetito))
+  }
+
+  test "Obtener todos los mensajeros que pueden llevar un paquete dado"{
+    paquetonViajero.pagar(150)
+    paquetonViajero.destino(puenteDeBrooklyn)
+    roberto.peso(1000)
+    assert.equals(2,empresa.mensajerosQuePuedenLlevarElPaquete(paquetonViajero).size())
+  }
+
+  test "una mensajería tiene sobrepeso"{
+    camion.acoplados(2)
+    assert.that(empresa.tieneSobrePeso())
+  }
 }
