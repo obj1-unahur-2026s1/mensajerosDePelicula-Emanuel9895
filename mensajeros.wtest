@@ -5,7 +5,22 @@ describe "los mensajeros llevan paquetes a destinos"{
 
   test "Roberto con 90kg puede llevar un paquete que está pago en un camión que tiene un acoplado."{
     roberto.peso(90)
-
+    roberto.transporte(camion)
+    camion.acoplados(1)
+    paquete.pagar()
+    paquete.destino(puenteDeBrooklyn)
+    assert.that(paquete.puedeSerEntregadPor(roberto))
   }
 
+  test "neo con crédito no puede llevar un paquete que no está pago a la matrix."{
+   neo.cargarCredito()
+   paquete.destino(laMatrix)
+   assert.notThat(paquete.puedeSerEntregadPor(neo))
+  }
+}
+
+test "chuckNorris puede llevar un paquete en bicicleta hasta el pueste de brooklyn"{
+  paquete.destino(puenteDeBrooklyn)
+  paquete.pagar()
+  assert.that(paquete.puedeSerEntregadPor(chuckNorris))
 }

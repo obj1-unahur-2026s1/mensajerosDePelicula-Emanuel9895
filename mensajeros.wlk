@@ -12,20 +12,23 @@ object roberto {
 
 }
 object chuckNorris {
-  
+  var transporte = camion
+  var peso = 0
   method peso() = 80
   method puedeLlamar() {return true}
+  method pesoTotal() = peso + transporte.peso()
 }
 
 object neo {
   var tieneCredito = false
   method peso()= 0
-  method puedeLLamar(){return tieneCredito}
+  method puedeLlamar(){return tieneCredito}
   method cargarCredito() {tieneCredito = true}
+method pesoTotal() = 0
 }
 
 object camion {
-    var acopladosActuales = 1
+    var acopladosActuales = 0
 
   method acoplados(cantidadAcoplados) {
     acopladosActuales = cantidadAcoplados
@@ -42,7 +45,10 @@ object bicicleta {
 object paquete{
     var estaPago = false
     var destino = puenteDeBrooklyn
-    method puedeEntregarse(unMensajero){
-      if()
+    method pagar() {estaPago = true}
+    method estaPago(){return estaPago}
+    method destino(unLugar) {destino = unLugar}
+    method puedeSerEntregadPor(unMensajero){
+      return destino.dejaPasar(unMensajero) and self.estaPago()
     }
 }
