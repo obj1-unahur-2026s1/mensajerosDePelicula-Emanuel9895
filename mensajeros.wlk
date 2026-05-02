@@ -62,9 +62,11 @@ object paquete{
 }
 
 object paquetito{
-  method precio() = 0
+  var precio = 0
   method estaPago() = true
+  method precio() = precio
   method puedeSerEntregadoPor(unMensajero) = true
+  method cambiarPrecio(unPrecio) {precio = unPrecio}
 }
 
 object paquetonViajero{
@@ -86,6 +88,8 @@ object empresa{
   var paquetesEnviados = 0
 
   method facturacionDeLaEmpresa() = totalGanado 
+  method totalEnvios() = paquetesEnviados
+  method ponerEnPendientes(paquetes) {paquetesPendientes.addAll(paquetes)}
 
   method puedePaqueteSerEntregado(unPaquete){
     return mensajeros.any({m => unPaquete.puedeSerEntregadoPor(m)})
@@ -96,7 +100,7 @@ object empresa{
   }
 
   method tieneSobrePeso(){
-    return mensajeros.sum( {m => m.peso()} / mensajeros.size() > 500 )
+    return mensajeros.sum( {m => m.pesoTotal()}) / mensajeros.size() > 500 
   }
 
   method enviarPaquete(unPaquete){
@@ -104,7 +108,7 @@ object empresa{
       const mensajero = self.mensajerosQuePuedenLlevarElPaquete(unPaquete).first()
       mensajero.enviarPaquete(unPaquete)
       totalGanado += unPaquete.precio()
-      paquetesEnviados += paquetesEnviados
+      paquetesEnviados += 1
     }
     else{
       paquetesPendientes.add(unPaquete)

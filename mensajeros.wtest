@@ -40,6 +40,20 @@ describe "la empresa envia paquetes con los mensajeros"{
 
   test "una mensajería tiene sobrepeso"{
     camion.acoplados(2)
+    roberto.peso(50)
     assert.that(empresa.tieneSobrePeso())
   }
+
+  test "empresa de mensajería envía un paquete"{
+    empresa.enviarPaquete(paquetito)
+    assert.equals(1, empresa.totalEnvios())
+  }
+
+  test "facturacion de la empresa es mayor a 20"{
+    paquetito.cambiarPrecio(500)
+    empresa.ponerEnPendientes([paquete,paquetito,paquetonViajero])
+    empresa.enviarElPaqueteMasCaro()
+    assert.that(empresa.facturacionDeLaEmpresa()>=20)
+  }
+
 }
